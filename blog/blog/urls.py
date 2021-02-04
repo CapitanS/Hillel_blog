@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('posts/', include('posts.urls')),
+    path('', RedirectView.as_view(url='posts/', permanent=True)),
 ]
 
 # Add Django site authentication urls (for login, logout, password management)
