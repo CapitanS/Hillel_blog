@@ -17,3 +17,8 @@ class Comment(models.Model):
 	username = models.CharField(_("username"), max_length=100)
 	text = models.CharField(_("text"), max_length=300)
 	post = models.ForeignKey("Post", on_delete=models.SET_NULL, null=True)
+
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'university/post_detail_page.html'
