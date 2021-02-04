@@ -10,6 +10,7 @@ class Post(models.Model):
 	image = models.URLField(max_length = 200)
 	full_description = models.CharField(_("full description"), max_length=1000)
 	borrower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+	posted = models.BooleanField(_('posted'), default=False)
 
 
 class Comment(models.Model):

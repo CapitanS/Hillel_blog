@@ -8,7 +8,7 @@ class CommentInlineModelAdmin(admin.TabularInline):
 
 
 class PostAdmin(admin.ModelAdmin):
-    fields = ['title', 'short_description', 'image', 'full_description', 'borrower']
+    fields = ['title', 'short_description', 'image', 'full_description', 'borrower', 'posted']
     inlines = [CommentInlineModelAdmin]
 
 
