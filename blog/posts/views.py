@@ -18,3 +18,9 @@ class PostCreate(LoginRequiredMixin, CreateView):
     fields = ['title', 'short_description', 'image', 'full_description', 'posted']
     template_name = 'posts/post_create_page.html'
     #success_url = reverse_lazy('posts:post_list')
+
+
+class PostList(ListView):
+    model = Post
+    paginate_by = 10
+    template_name = 'posts/post_list_page.html'
