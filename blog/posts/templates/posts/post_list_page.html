@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Posts:</h1>
+<ul>
+
+{% for post in page_obj %}
+    <li><h3>Post: {{ post.name }} </h3></li>
+{% empty %}
+    <li>No posts yet.</li>
+{% endfor %}
+
+{% endblock %}
