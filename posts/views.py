@@ -36,6 +36,9 @@ class PostList(ListView):
     paginate_by = 10
     template_name = 'posts/post_list_page.html'
 
+    def get_queryset(self):
+        return Post.objects.all().filter(posted=True)
+
 
 def post_comments(request, pk):
     post = get_object_or_404(Post, pk=pk)
