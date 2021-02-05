@@ -24,3 +24,8 @@ class PostList(ListView):
     model = Post
     paginate_by = 10
     template_name = 'posts/post_list_page.html'
+
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'university/post_detail_page.html'
