@@ -1,5 +1,5 @@
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
@@ -8,7 +8,7 @@ class Post(models.Model):
     title = models.CharField(_("title"), max_length=100)
     short_description = models.CharField(_("short description"), max_length=200)
     image = models.URLField(max_length=400)
-    full_description = models.TextField(_("full description"), blank = True)
+    full_description = models.TextField(_("full description"), blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     posted = models.BooleanField(_('posted'), default=False)
 
