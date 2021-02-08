@@ -1,16 +1,14 @@
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
-from .models import Post, Comment
-from .forms import CommentForm
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, ListView
+
+from .forms import CommentForm
+from .models import Comment, Post
 
 
-# Create your views here.
 def index(request):
     """View function for home page of site."""
 
@@ -43,7 +41,7 @@ class PostList(ListView):
 def post_comments(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = Comment.objects.all().filter(post=post)
-    paginator = Paginator(comments, 2) # Show 25 contacts per page.
+    paginator = Paginator(comments, 2)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
