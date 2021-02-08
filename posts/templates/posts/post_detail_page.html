@@ -5,31 +5,15 @@
 <h3>Title: {{ post.title }} {{ student.last_name }}</h3></li>
 <img alt="Qries" src="{{ post.image }}" width="300" height="140">
 <h5>Description: {{ post.full_description }}</h5>
-
+<hr>
 <h3>Comments</h3>
 {% for comment in page_obj %}
-<h5>User name:{{ comment.username }}</h5>
-<h5>Comment: {{ comment.text }}</h5>
+<h6>User name:{{ comment.username }}</h6>
+<h6>Comment: {{ comment.text }}</h6>
 {% endfor %}
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-
+{% include "paginator_incl.html" %}
+<hr>
 <form method="post">
   {% csrf_token %}
   {{form.as_p}}

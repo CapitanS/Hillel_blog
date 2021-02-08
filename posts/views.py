@@ -67,3 +67,23 @@ def post_comments(request, pk):
     }
 
     return render(request, 'posts/post_detail_page.html', context)
+
+
+def users_posts(request):
+    current_user = request.user
+
+    posted_posts = Post.objects.filter(user=current_user).filter(posted=True)
+    paginator = Paginator(posted_posts, 2)
+    page_number = request.GET.get('page')
+    page_obj_posted = paginator.get_page(page_number)
+
+    unposted_posts = Post.objects.filter(user=current_user).filter(posted=False)
+    paginator = Paginator(unposted_posts, 2)
+    page_number = request.GET.get('page')
+    page_obj_unposted = paginator.get_page(page_number)
+
+    context = {
+        'page_obj_posted': page_obj_posted,
+        'page_obj_unposted': page_obj_unposted,
+    }
+    return render(request, 'posts/users_posts_page.html', context)
