@@ -12,34 +12,51 @@
 <body>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-4 col-lg-3 navbar-container bg-light">
-        <!-- Вертикальное меню -->
-        <nav class="navbar navbar-expand-md navbar-light">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbar">
-            <!-- Пункты вертикального меню -->
-            <ul class="navbar-nav">
-              {% if user.is_authenticated %}
+      <div class="col-sm-2">
+      {% block sidebar %}
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'post_list' %}">All posts</a></li>
+            <li><a href="">All users</a></li>
+            <li><a href="">RSS</a></li>
+        </ul>
+
+        <hr />
+
+        <ul class="sidebar-nav">
+            <li><a href="">My posts</a></li>
+            <li><a href="{% url 'post_create' %}">Create post</a></li>
+        </ul>
+
+        <hr />
+
+        <ul class="sidebar-nav">
+            <li><a href="">Feedback</a></li>
+        </ul>
+
+        <hr />
+
+        <ul class="sidebar-nav">
+            {% if user.is_authenticated %}
             <li>User: {{ user.get_username }}</li>
             <li><a href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
             {% else %}
             <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
             {% endif %}
-            </ul>
-          </div>
-        </nav>
-      </div>
-      <div class="col-md-8 col-lg-9 content-container" style="background-color: #ffe0b2">
+        </ul>
 
-        {% block content %}
-        {% endblock %}
-        ...
+      {% endblock %}
       </div>
-    </div>
-  </div>
+      <div class="col-sm-10 ">
+          {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+
+          {% block content %}{% endblock %}
 
         {% block pagination %}
           {% if is_paginated %}
