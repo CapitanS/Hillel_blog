@@ -37,10 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'django_extensions',
-
-    'posts.apps.PostsConfig'
+    # Add new application
+    'django_extensions',  # Collection of custom extensions for Django
+    'posts.apps.PostsConfig'  # This object was created for /posts/apps.py
 ]
 
 MIDDLEWARE = [
