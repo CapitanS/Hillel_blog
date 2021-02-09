@@ -16,7 +16,7 @@ User = get_user_model()
 def index(request):
     """View function for home page of site."""
 
-    return render(request, 'index.html')
+    return render(request, 'posts/index.html')
 
 
 class RegisterFormView(SuccessMessageMixin, FormView):
