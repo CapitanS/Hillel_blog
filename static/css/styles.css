@@ -34,4 +34,5 @@ hr {
     background-color: black; /* Цвет линии */
     color: black; /* Цвет линии для IE6-7 */
     height: 2px; /* Толщина линии */
+    opacity: .3;
 }
