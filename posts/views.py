@@ -1,11 +1,12 @@
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView, DetailView
 
 from .forms import CommentForm, RegisterForm
 from .models import Comment, Post
@@ -73,7 +74,7 @@ class PostList(ListView):
 
 def post_comments(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    comments = Comment.objects.all().filter(post=post)
+    comments = Comment.objects.all().filter(post=post).filter(moderated=True)
     paginator = Paginator(comments, 2)
 
     page_number = request.GET.get('page')
@@ -145,3 +146,29 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         if not obj.user == self.request.user:
             return redirect(obj)
         return obj
+
+
+class UserDetail(DetailView):
+    model = User
+    template_name = 'posts/user_detail_page.html'
+
+    def get_object(self, queryset=None):
+        obj = super(UserDetail, self).get_object(queryset=queryset)
+        if obj.is_staff:
+            raise Http404()
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.get_object()
+        context['posts'] = Post.objects.filter(user=self.get_object())
+        return context
+
+
+class UserList(ListView):
+    model = User
+    template_name = 'posts/user_list_page.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return User.objects.filter(is_staff=False)
