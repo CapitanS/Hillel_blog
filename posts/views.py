@@ -32,7 +32,6 @@ class RegisterFormView(FormView):
         return super(RegisterFormView, self).form_valid(form)
 
 
-
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'short_description', 'image', 'full_description', 'posted']
