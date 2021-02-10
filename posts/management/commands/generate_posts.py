@@ -1,126 +1,114 @@
 import json
+import os
 
 from django.core.management.base import BaseCommand, CommandError
 from faker import Faker
 from faker.generator import random
+from lorem import get_paragraph, get_sentence, get_word
 
 
-def generate_city() -> str:
+# CONSTANTS
+POSTS_NUMBER = 100
+COMMENTS_NUMBER = 100
+
+
+def generate_post() -> dict:
     """
-        Generate random city
-        @return: str with city_name
-        """
-    fake = Faker(['en_US'])
-    city_name = fake.city()
-
-    return city_name
-
-
-def generate_product() -> dict:
+    Generate random post
+    @return: dict with title, short_description, image,
+             full_description, user, posted
     """
-        Generate random product
-        @return: dict with product_name and his price
-        """
-    dict_product = {
-        'product_name': '',
-        'product_price': '',
+    dict_post = {
+        'title': '',
+        'short_description': '',
+        'image': '',
+        'full_description': '',
+        'user': 1,
+        'posted': False
     }
     fake = Faker(['en_US'])
-    product_name = fake.word()
-    product_price = round(random.uniform(0.9, 225.9), 2)
-    dict_product['product_name'] = product_name
-    dict_product['product_price'] = product_price
-    return dict_product
+    dict_post['title'] = get_word(count=1)
+    dict_post['short_description'] = get_sentence(count=1,
+                                                  word_range=(4, 8),
+                                                  sep=' ')
+    dict_post['image'] = fake.image_url()
+    dict_post['full_description'] = get_paragraph(count=3,
+                                                  comma=(0, 2),
+                                                  word_range=(4, 8),
+                                                  sentence_range=(5, 10),
+                                                  sep=os.linesep)
+    dict_post['user'] = random.randint(1, 2)
+    dict_post['posted'] = random.choice([True, False])
+    return dict_post
 
 
-def generate_customers(number: int) -> dict:
+def generate_comment() -> dict:
     """
-    Generate random customer
-    @return: dictionary with first_name, last_name, city_id, product_id
+    Generate random post
+    @return: dict with title, short_description, image,
+             full_description, user, posted
     """
-    dict_user = {
-        'first_name': '',
-        'last_name': '',
-        'city': '',
-        'product': []
+    dict_comment = {
+        'username': '',
+        'text': '',
+        'post': 1,
+        'moderated': False
     }
     fake = Faker(['en_US'])
-    first_name = fake.first_name()
-    last_name = fake.last_name()
-    city_id = random.randint(1, number)
-
-    dict_user['first_name'] = first_name
-    dict_user['last_name'] = last_name
-    dict_user['city'] = city_id
-    for _ in range(random.randint(1, 3)):
-        dict_user['product'].append(random.randint(1, number))
-
-    return dict_user
+    dict_comment['username'] = fake.first_name()
+    dict_comment['text'] = get_sentence(count=1, word_range=(4, 8), sep=' ')
+    dict_comment['post'] = random.randint(1, POSTS_NUMBER)
+    dict_comment['moderated'] = random.choice([True, False])
+    return dict_comment
 
 
 class Command(BaseCommand):
-    help = "Create random city, customer, products"  # noqa:A003
-
-    def add_arguments(self, parser):
-        parser.add_argument('instance_number', type=int, help='Number of generated instance')
+    help = "Create random posts and comments"  # noqa:A003
 
     def handle(self, *args, **kwargs):
-        instance_number = kwargs['instance_number']
 
-        # Generate base of cities to json file for loaddata
-        cities_base = []
-        for n in range(1, instance_number + 1):
-            city_name = generate_city()
-            city_instance = {
-                "model": "orders.city",
+        # Generate base of posts to json file for loaddata
+        posts_base = []
+        for n in range(1, POSTS_NUMBER + 1):
+            post = generate_post()
+            post_instance = {
+                "model": "posts.post",
                 "pk": n,
                 "fields": {
-                    "name": city_name
+                    "title": post['title'],
+                    "short_description": post['short_description'],
+                    "image": post['image'],
+                    "full_description": post['full_description'],
+                    "user": post['user'],
+                    "posted": post['posted'],
                 }
             }
-            cities_base.append(city_instance)
+            posts_base.append(post_instance)
         try:
-            with open('orders/fixtures/orders_city.json', 'w') as cities:
-                json.dump(cities_base, cities)
+            with open('posts/fixtures/posts_post.json', 'w') as posts:
+                json.dump(posts_base, posts)
         except Exception as err:
             raise CommandError('Some error occurred:', str(err))
 
-        # Generate base of products to json file for loaddata
-        products_base = []
-        for n in range(1, instance_number + 1):
-            product = generate_product()
-            product_instance = {
-                "model": "orders.product",
+        # Generate base of comments to json file for loaddata
+        comments_base = []
+        for n in range(1, COMMENTS_NUMBER + 1):
+            comment = generate_comment()
+            comment_instance = {
+                "model": "posts.comment",
                 "pk": n,
                 "fields": {
-                    "name": product['product_name'],
-                    "price": product['product_price']
+                    "username": comment['username'],
+                    "text": comment['text'],
+                    "post": comment['post'],
+                    "moderated": comment['moderated'],
                 }
             }
-            products_base.append(product_instance)
+            comments_base.append(comment_instance)
         try:
-            with open('orders/fixtures/orders_product.json', 'w') as products:
-                json.dump(products_base, products)
+            with open('posts/fixtures/posts_comment.json', 'w') as comments:
+                json.dump(comments_base, comments)
         except Exception as err:
             raise CommandError('Some error occurred:', str(err))
 
-        # Generate base of customers to json file for loaddata
-        customers_base = []
-        for n in range(1, instance_number + 1):
-            customer = generate_customers(instance_number)
-            customer_instance = {
-                "model": "orders.customer",
-                "pk": n,
-                "fields": {
-                    "first_name": customer['first_name'],
-                    "last_name": customer['last_name'],
-                    "city": customer['city'],
-                    "product": customer['product'],
-                }
-            }
-            customers_base.append(customer_instance)
-        try:
-            with open('orders/fixtures/orders_customer.json', 'w') as customers:
-                json.dump(customers_base, customers)
-        except Exception as err:
-            raise CommandError('Some error occurred:', str(err))
+        # Load to base
