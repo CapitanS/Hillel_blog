@@ -36,3 +36,16 @@ hr {
     height: 2px; /* Толщина линии */
     opacity: .3;
 }
+
+figure {
+    width: 27%; /* Ширина */
+    float: left; /* Выстраиваем элементы по горизонтали */
+    margin: 0 0 0 3.5%; /* Отступ слева */
+    background: #f0f0f0; /* Цвет фона */
+    border-radius: 5px; /* Радиус скругления */
+    padding: 2%; /* Поля */
+}
+figure:first-child {
+    margin-left: 0; /* Убираем отступ для первого элемента */
+}
+

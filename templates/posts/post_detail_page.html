@@ -3,7 +3,9 @@
 {% block content %}
 
 <h3>Title: {{ post.title }} {{ student.last_name }}</h3></li>
-<img alt="Qries" src="{{ post.image }}" width="300" height="140">
+<figure>
+   	<img alt="Qries" src="{{ post.image }}" width="30%">
+</figure>
 <h5>Description: {{ post.full_description }}</h5>
 <h5>Author: <a href="{% url 'posts:user_detail' post.user.id %}" >{{ post.user }}</a><h5>
 <hr>
