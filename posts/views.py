@@ -22,7 +22,7 @@ def index(request):
 class RegisterFormView(SuccessMessageMixin, FormView):
     template_name = 'registration/register.html'
     form_class = RegisterForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('posts:index')
     success_message = 'Profile created'
 
     def form_valid(self, form):
@@ -40,7 +40,7 @@ class UpdateProfile(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = User
     fields = ['first_name', 'last_name', 'email']
     template_name = 'registration/update_profile.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('posts:index')
     success_message = 'Profile updated'
 
     def get_object(self, queryset=None):
