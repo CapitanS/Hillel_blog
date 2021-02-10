@@ -1,0 +1,74 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$llTPcUpwukrQ$woGs6ZylooviZdTTSiIxs1d+lZp2PtNMRhqgYsaONkE=",
+      "last_login": "2021-02-09T09:46:03.844Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "admin@admin.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-02-08T13:37:29.846Z",
+      "groups": [ ],
+      "user_permissions": [ ]
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$v4GmJkQ1weYG$eiT6xGa2PDBAMaWjIYFoiyZBX1a87QkBJmxIQeruyos=",
+      "last_login": "2021-02-09T10:37:13.177Z",
+      "is_superuser": false,
+      "username": "qazwsx",
+      "first_name": "qa111qq121",
+      "last_name": "qqqqqq111",
+      "email": "qaz@qaz.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-09T10:37:11.613Z",
+      "groups": [ ],
+      "user_permissions": [ ]
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$IZXTgopiiNv5$YFajTWeyr+rSSQ7O6YerT0tbkReooyy4rD1O3ifIv1I=",
+      "last_login": "2021-02-10T06:42:28.257Z",
+      "is_superuser": false,
+      "username": "qazwsx1",
+      "first_name": "",
+      "last_name": "",
+      "email": "qazwsx1@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-10T06:42:26.172Z",
+      "groups": [ ],
+      "user_permissions": [ ]
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$bXUBEE4UxN0c$SO/Xj23Z2Nbh6wGJ39RGSSWK15wnQmIEo8GOxa+1rDo=",
+      "last_login": "2021-02-10T06:48:21.991Z",
+      "is_superuser": false,
+      "username": "qazwsx131",
+      "first_name": "",
+      "last_name": "",
+      "email": "qazwsx131@mail.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-02-10T06:48:18.804Z",
+      "groups": [ ],
+      "user_permissions": [ ]
+    }
+  }
+]

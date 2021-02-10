@@ -1,0 +1,14 @@
+[
+  {
+    "model": "posts.post",
+    "pk": 1,
+    "fields": {
+      "title": "the title",
+      "short_description": "lorem",
+      "image": "https://cdn.pixabay.com/photo/2021/02/02/20/27/woman-5975243_960_720.jpg",
+      "full_description": "lorem lorem",
+      "user": 2,
+      "posted": true
+    }
+  }
+]

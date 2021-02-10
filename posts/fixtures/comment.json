@@ -1,0 +1,12 @@
+[
+  {
+    "model": "posts.comment",
+    "pk": 1,
+    "fields": {
+      "username": "Pitkin",
+      "text": "Bla bla bla",
+      "post": 1,
+      "moderated": true
+    }
+  }
+]
