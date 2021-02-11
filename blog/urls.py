@@ -30,3 +30,6 @@ urlpatterns += [
     path('accounts/register/', RegisterFormView.as_view(), name='register'),
     path('accounts/update_profile/', UpdateProfile.as_view(), name='update_profile'),
 ]
+
+# silk
+urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

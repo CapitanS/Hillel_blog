@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", 'n_34wr@is*tv()63z(3qw#+myhj0)1dm!un1+khf$w^cr8e58t')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Add new application
     'django_extensions',  # Collection of custom extensions for Django
-    'posts.apps.PostsConfig'  # This object was created for /posts/apps.py
+    'posts.apps.PostsConfig',  # This object was created for /posts/apps.py
+
+    'silk',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'

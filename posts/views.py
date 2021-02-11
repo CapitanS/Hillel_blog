@@ -2,10 +2,10 @@ from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-from django.http import Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, FormView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 
 from .forms import CommentForm, RegisterForm
 from .models import Comment, Post
@@ -91,9 +91,8 @@ def post_detail(request, pk):
             return HttpResponseRedirect(reverse('posts:post_detail', args=(post.id,)))
 
     else:
-        initial = {'username':request.user.username}
+        initial = {'username': request.user.username}
         form = CommentForm(initial=initial)
-
 
     context = {
         'form': form,
@@ -150,7 +149,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 
 def user_detail(request, pk):
-    user = get_object_or_404(User, pk=pk, is_staff=False)
+    user = get_object_or_404(User, pk=pk, is_staff=True)
     posts = Post.objects.filter(user=user).filter(posted=True)
     paginator = Paginator(posts, 5)
 
