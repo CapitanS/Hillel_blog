@@ -91,7 +91,9 @@ def post_comments(request, pk):
             return HttpResponseRedirect(reverse('posts:post_comments', args=(post.id,)))
 
     else:
-        form = CommentForm()
+        initial = {'username':request.user.username}
+        form = CommentForm(initial=initial)
+
 
     context = {
         'form': form,
