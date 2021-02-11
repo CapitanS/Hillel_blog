@@ -10,9 +10,9 @@ make_moderated.short_description = "Mark selected comments as moderated"  # noqa
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    fields = ['username', 'text', 'moderated']
+    fields = ['username', 'text', 'post', 'moderated']
     list_display = ('username', 'text', 'moderated')
-    list_filter = ('moderated',)
+    list_filter = ('moderated', 'username')
     actions = [make_moderated]
 
 
@@ -25,3 +25,5 @@ class CommentInlineModelAdmin(admin.TabularInline):
 class PostAdmin(admin.ModelAdmin):
     fields = ['title', 'short_description', 'image', 'full_description', 'user', 'posted']
     inlines = [CommentInlineModelAdmin]
+    list_filter = ('posted', 'user')
+    list_display = ('title', 'short_description', 'user', 'posted')

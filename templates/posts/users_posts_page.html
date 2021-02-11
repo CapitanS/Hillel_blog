@@ -3,13 +3,13 @@
 {% block content %}
 <h1>Posted!</h1>
 {% for post in page_obj_posted %}
-  <h4>Post: <a href="{% url 'posts:post_comments' post.id %}">{{ post.title }}</a> </h4>
-  <li><h5>Short description: {{ post.short_description }} </h5></li>
-  <figure>
-    <img alt="Qries" src="{{ post.image }}" width="30%">
-  </figure>
-  <li><a href='{% url "posts:post_update" post.id %}'>Update</a></li>
-  <li><a href='{% url "posts:post_delete" post.id %}'>Delete</a></li>
+  <li><h4>Title: <a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a> </h4></li>
+  <h5>Short description: {{ post.short_description }} </h5>
+  <img alt="Qries" src="{{ post.image }}" width="30%">
+<div>
+ <a href='{% url "posts:post_update" post.id %}'>Update</a>
+ <a href='{% url "posts:post_delete" post.id %}'>Delete</a>
+</div>
 {% empty %}
   <h3>No unposted posts yet!</h3>
 {% endfor %}
@@ -35,13 +35,13 @@
 <hr>
 <h1>Unposted!</h1>
 {% for post in page_obj_unposted %}
-  <h4>Post: <a href="{% url 'posts:post_comments' post.id %}">{{ post.title }}</a> </h4>
-  <li><h5>Short description: {{ post.short_description }} </h5></li>
-  <figure>
-    <img alt="Qries" src="{{ post.image }}" width="30%">
-  </figure>
-  <li><a href='{% url "posts:post_update" post.id %}'>Update</a></li>
-  <li><a href='{% url "posts:post_delete" post.id %}'>Delete</a></li>
+  <li><h4>Title: {{ post.title }} </h4></li>
+  <h5>Short description: {{ post.short_description }} </h5>
+  <img alt="Qries" src="{{ post.image }}" width="30%">
+<div>
+ <a href='{% url "posts:post_update" post.id %}'>Update</a>
+ <a href='{% url "posts:post_delete" post.id %}'>Delete</a>
+</div>
 {% empty %}
   <h3>No unposted posts yet!</h3>
 {% endfor %}

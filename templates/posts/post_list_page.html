@@ -5,12 +5,10 @@
 <h3>Posts:</h3>
 <ul>
 {% for post in page_obj %}
-    <h4>Post: <a href="{% url 'posts:post_comments' post.id %}">{{ post.title }}</a> </h4>
-    <li><h5>Short description: {{ post.short_description }} </h5></li>
-    <h5>Borrower: {{ post.user }}</h5>
-    <figure>
-   	  <img alt="Qries" src="{{ post.image }}" width="30%">
-  	</figure>
+    <li><h4>Title: <a href="{% url 'posts:post_detail' post.id %}">{{ post.title }}</a> </h4></li>
+    <h5>Short description: {{ post.short_description }} </h5>
+    <h5>Author: <a href="{% url 'posts:user_detail' post.user.id %}" >{{ post.user }}</a></h5>
+   	<img alt="Qries" src="{{ post.image }}" width="30%">
 {% empty %}
     <li>No posts yet.</li>
 {% endfor %}

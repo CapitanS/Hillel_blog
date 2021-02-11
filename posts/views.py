@@ -71,8 +71,8 @@ class PostList(ListView):
         return Post.objects.all().filter(posted=True)
 
 
-def post_comments(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk, posted=True)
     comments = Comment.objects.all().filter(post=post).filter(moderated=True)
     paginator = Paginator(comments, 2)
 
@@ -88,7 +88,7 @@ def post_comments(request, pk):
             comm.text = form.cleaned_data['text']
             comm.post = post
             comm.save()
-            return HttpResponseRedirect(reverse('posts:post_comments', args=(post.id,)))
+            return HttpResponseRedirect(reverse('posts:post_detail', args=(post.id,)))
 
     else:
         initial = {'username':request.user.username}
@@ -149,21 +149,19 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         return obj
 
 
-class UserDetail(DetailView):
-    model = User
-    template_name = 'posts/user_detail_page.html'
+def user_detail(request, pk):
+    user = get_object_or_404(User, pk=pk, is_staff=False)
+    posts = Post.objects.filter(user=user).filter(posted=True)
+    paginator = Paginator(posts, 5)
 
-    def get_object(self, queryset=None):
-        obj = super(UserDetail, self).get_object(queryset=queryset)
-        if obj.is_staff:
-            raise Http404()
-        return obj
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.get_object()
-        context['posts'] = Post.objects.filter(user=self.get_object())
-        return context
+    context = {
+        'page_obj': page_obj,
+        'obj': user,
+    }
+    return render(request, 'posts/user_detail_page.html', context)
 
 
 class UserList(ListView):
