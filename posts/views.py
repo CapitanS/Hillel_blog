@@ -71,6 +71,7 @@ class PostList(ListView):
         return Post.objects.all().filter(posted=True)
 
 
+# paginator!
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk, posted=True)
     comments = Comment.objects.all().filter(post=post).filter(moderated=True)
@@ -148,10 +149,11 @@ class PostDelete(LoginRequiredMixin, DeleteView):
         return obj
 
 
+# paginator!
 def user_detail(request, pk):
-    user = get_object_or_404(User, pk=pk, is_staff=True)
+    user = get_object_or_404(User, pk=pk, is_staff=False)
     posts = Post.objects.filter(user=user).filter(posted=True)
-    paginator = Paginator(posts, 5)
+    paginator = Paginator(posts, 1)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
