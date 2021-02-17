@@ -153,7 +153,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk, is_staff=False)
     posts = Post.objects.filter(user=user).filter(posted=True)
-    paginator = Paginator(posts, 1)
+    paginator = Paginator(posts, 5)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
