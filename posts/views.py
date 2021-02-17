@@ -1,13 +1,14 @@
 from django.contrib.auth import authenticate, get_user_model, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 
-from .forms import CommentForm, RegisterForm
+from .forms import CommentForm, RegisterForm, FeedbackFrom
 from .models import Comment, Post
 
 User = get_user_model()
@@ -172,3 +173,24 @@ class UserList(ListView):
 
     def get_queryset(self):
         return User.objects.filter(is_staff=False)
+
+
+def feedback_form(request):
+    if request.method == "GET":
+        form = FeedbackFrom()
+    else:
+        form = FeedbackFrom(request.POST)
+        if form.is_valid():
+            subject = 'New feedback!'
+            from_email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            send_mail(subject, message, from_email, ['admin@example.com'])
+
+            return redirect('posts:feedback')
+    return render(
+        request,
+        "posts/feedback_page.html",
+        context={
+            "form": form,
+        }
+    )

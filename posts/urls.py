@@ -14,4 +14,5 @@ urlpatterns = [
     path('my-posts/', views.users_posts, name='users_posts'),
     path('user/<int:pk>', views.user_detail, name='user_detail'),
     path('user/', views.UserList.as_view(), name='user_list'),
+    path('feedback', views.feedback_form, name="feedback"),
 ]
