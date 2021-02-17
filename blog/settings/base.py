@@ -1,5 +1,5 @@
 import os
-from pathlib import Path
+from pathlib import Path  # noqa
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -128,7 +128,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # BASE_DIR for fixtures
 FIXTURE_DIRS = [
-    os.path.join(BASE_DIR , 'db.sqlite3'),
+    os.path.join(BASE_DIR, 'fixtures'),
 ]
 
 

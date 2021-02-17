@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 
-from .forms import CommentForm, RegisterForm, FeedbackFrom
+from .forms import CommentForm, FeedbackFrom, RegisterForm
 from .models import Comment, Post
 
 User = get_user_model()

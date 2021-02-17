@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
 from posts.views import RegisterFormView, UpdateProfile
-import os
 
 
 urlpatterns = [
