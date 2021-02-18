@@ -30,7 +30,6 @@ class PostAdmin(admin.ModelAdmin):
 
 
 @admin.register(RSSPost)
-class PostAdmin(admin.ModelAdmin):
+class RSSPostAdmin(admin.ModelAdmin):
     fields = ['title', 'link']
     list_display = ('title', 'link')
-
