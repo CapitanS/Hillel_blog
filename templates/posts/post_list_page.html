@@ -9,7 +9,6 @@
     <h5>Short description: {{ post.short_description }} </h5>
     <h5>Author: <a href="{% url 'posts:user_detail' post.user.id %}" >{{ post.user }}</a></h5>
    	<img alt="Qries" src="{{ post.image }}" width="30%">
-   	<hr>
 {% empty %}
     <li>No posts yet.</li>
 {% endfor %}
