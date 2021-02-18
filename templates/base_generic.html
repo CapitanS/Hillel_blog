@@ -18,7 +18,7 @@
             <li><a href="{% url 'posts:index' %}">Home</a></li>
             <li><a href="{% url 'posts:post_list' %}">All posts</a></li>
             <li><a href="{% url 'posts:user_list' %}">All users</a></li>
-            <li><a href="">RSS</a></li>
+            <li><a href="{% url 'posts:rss_post_list' %}">Interesting posts</a></li>
         </ul>
         {% if user.is_authenticated %}
         <hr />

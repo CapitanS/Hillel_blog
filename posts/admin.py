@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Comment, Post
+from .models import Comment, Post, RSSPost
 
 
 def make_moderated(modeladmin, request, queryset):
@@ -27,3 +27,10 @@ class PostAdmin(admin.ModelAdmin):
     inlines = [CommentInlineModelAdmin]
     list_filter = ('posted', 'user')
     list_display = ('title', 'short_description', 'user', 'posted')
+
+
+@admin.register(RSSPost)
+class PostAdmin(admin.ModelAdmin):
+    fields = ['title', 'link']
+    list_display = ('title', 'link')
+

@@ -16,4 +16,5 @@ urlpatterns = [
     path('user/<int:pk>', cache_page(15)(views.user_detail), name='user_detail'),
     path('user/', cache_page(5)(views.UserList.as_view()), name='user_list'),
     path('feedback', views.feedback_form, name="feedback"),
+    path('rss-posts', views.RSSPostList.as_view(), name="rss_post_list"),
 ]

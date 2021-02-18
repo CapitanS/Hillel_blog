@@ -9,7 +9,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 
 from .forms import CommentForm, FeedbackFrom, RegisterForm
-from .models import Comment, Post
+from .models import Comment, Post, RSSPost
 
 User = get_user_model()
 
@@ -194,3 +194,9 @@ def feedback_form(request):
             "form": form,
         }
     )
+
+
+class RSSPostList(ListView):
+    model = RSSPost
+    template_name = 'posts/rss_post_list_page.html'
+    paginate_by = 10

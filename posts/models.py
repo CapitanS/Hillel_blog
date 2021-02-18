@@ -24,3 +24,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class RSSPost(models.Model):
+    title = models.CharField(_("title"), max_length=300)
+    link = models.URLField(max_length=400)
+
+    def __str__(self):
+        return self.title
