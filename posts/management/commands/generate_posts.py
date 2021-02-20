@@ -1,7 +1,9 @@
 import json
 import os
 
+from django.core import management
 from django.core.management.base import BaseCommand, CommandError
+from django.core.management.commands import loaddata
 from faker import Faker
 from faker.generator import random
 from lorem import get_paragraph, get_sentence, get_word
@@ -56,7 +58,9 @@ def generate_comment() -> dict:
     }
     fake = Faker(['en_US'])
     dict_comment['username'] = fake.first_name()
-    dict_comment['text'] = get_sentence(count=1, word_range=(4, 8), sep=' ')
+    dict_comment['text'] = get_sentence(count=1,
+                                        word_range=(4, 8),
+                                        sep=' ')
     dict_comment['post'] = random.randint(1, POSTS_NUMBER)
     dict_comment['moderated'] = random.choice([True, False])
     return dict_comment
@@ -112,3 +116,5 @@ class Command(BaseCommand):
             raise CommandError('Some error occurred:', str(err))
 
         # Load to base
+        management.call_command(loaddata.Command(), 'posts_post.json', verbosity=0)
+        management.call_command(loaddata.Command(), 'posts_comment.json', verbosity=0)
